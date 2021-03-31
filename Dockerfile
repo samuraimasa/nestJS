@@ -8,9 +8,9 @@ ENV YARN_VERSION=1.22.5
 
 ENV LANG ja_JP.UTF-8
 ENV LANGUAGE ja_JP:ja
+ENV LC_ALL=ja_JP.UTF-8
 ENV TZ JST-9
 ENV TERM xterm
-
 ENV LIB="git curl python make g++"
 
 RUN apt-get update \
@@ -29,5 +29,4 @@ RUN apt-get update \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && apt-get autoclean -y \
-  && yarn install \
-  && yarn cache clean --all
+  && npm i -g @nestjs/cli
