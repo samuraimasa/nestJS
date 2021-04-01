@@ -3,11 +3,12 @@ import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
-  Entity,
+  Entity, OneToMany,
   PrimaryGeneratedColumn, Unique,
   UpdateDateColumn
 } from "typeorm";
 import * as bcrypt from 'bcrypt'
+import { Task } from "../tasks/task.entity";
 
 @Entity()
 @Unique(['username'])
@@ -32,6 +33,9 @@ export class User extends BaseEntity {
 
   @DeleteDateColumn()
   readonly deletedAt?: Date;
+
+  @OneToMany(type => Task, task => task.user, { eager: true })
+  tasks: Task[]
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt)
