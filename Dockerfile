@@ -4,13 +4,15 @@ WORKDIR /server
 COPY package.json yarn.lock /server/
 
 ENV NODE_VERSION=15.11.0
-ENV YARN_VERSION=1.22.5
+ENV YARN_VERSION=1.22.10
 
-ENV LANG ja_JP.UTF-8
-ENV LANGUAGE ja_JP:ja
-ENV LC_ALL=ja_JP.UTF-8
-ENV TZ JST-9
-ENV TERM xterm
+#RUN localedef -f UTF-8 -i ja_JP ja_JP
+#ENV LANG ja_JP.UTF-8
+#ENV LANGUAGE ja_JP:ja
+#ENV LC_ALL=ja_JP.UTF-8
+#ENV TZ JST-9
+#ENV TERM xterm
+
 ENV LIB="git curl python make g++"
 
 RUN apt-get update \
@@ -29,4 +31,6 @@ RUN apt-get update \
   && apt-get autoremove -y \
   && apt-get clean -y \
   && apt-get autoclean -y \
-  && npm i -g @nestjs/cli
+  && npm i -g @nestjs/cli \
+  && npm i -g typeorm \
+  && npm i -g ts-node
