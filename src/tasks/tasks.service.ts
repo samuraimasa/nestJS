@@ -68,4 +68,9 @@ export class TasksService {
       throw new NotFoundException(`Task with ID "${ id }" not found`);
     }
   }
+
+  async batchTest() {
+    const task = await this.taskRepository.findOne(1)
+    console.log(task)
+  }
 }
