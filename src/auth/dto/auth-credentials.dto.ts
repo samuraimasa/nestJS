@@ -1,11 +1,10 @@
-import { IsString, Matches, MaxLength, MinLength } from "class-validator";
-
+import { IsString, Matches, MaxLength, MinLength } from 'class-validator';
 
 export class AuthCredentialsDto {
   @IsString()
   @MinLength(4)
   @MaxLength(20)
-  username: string
+  username: string;
 
   @IsString()
   @MinLength(8)
@@ -14,5 +13,5 @@ export class AuthCredentialsDto {
   //   /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z])$/,
   //   { message: 'パスワードが弱いです' }
   // )
-  password: string
+  password: string;
 }

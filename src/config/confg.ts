@@ -1,6 +1,6 @@
 import * as yaml from 'js-yaml';
 import { join } from 'path';
-import * as fs from "fs";
+import * as fs from 'fs';
 
 export default () => {
   return yaml.load(

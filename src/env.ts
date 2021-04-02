@@ -9,9 +9,9 @@ export default () => ({
     entities: ['dist/**/*.entity{.ts,.js}'],
     migrations: ['dist/src/db/migrations/*.js'],
     cli: {
-      migrationsDir: 'src/db/migrations'
+      migrationsDir: 'src/db/migrations',
     },
     synchronize: false,
-    logging: true
+    logging: true,
   },
-})
+});

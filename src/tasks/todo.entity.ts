@@ -1,26 +1,26 @@
 import {
   BaseEntity,
   Column,
-  Entity, ManyToOne,
+  Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
-} from "typeorm"
-import { Task } from "./task.entity"
-import { User } from "../auth/user.entity";
+} from 'typeorm';
+import { Task } from './task.entity';
 
 @Entity()
 export class Todo extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  readonly id: number
+  readonly id: number;
 
   @Column()
-  title: string
+  title: string;
 
   @Column()
-  description: string
+  description: string;
 
-  @ManyToOne(() => Task, task => task.todos)
-  task: Task
+  @ManyToOne(() => Task, (task) => task.todos)
+  task: Task;
 
   @Column({ default: null })
-  taskId: number
+  taskId: number;
 }
