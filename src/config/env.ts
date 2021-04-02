@@ -15,4 +15,4 @@ export default () => ({
     synchronize: true,
     logging: true
   },
-});
+})

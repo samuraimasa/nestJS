@@ -9,11 +9,12 @@ import {
 } from "typeorm";
 import { TaskStatus } from "./task-status.enum";
 import { User } from "../auth/user.entity";
+import { IsEmpty } from "class-validator";
 
 @Entity()
 export class Task extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  readonly id: number;
+  readonly id: number
 
   @Column()
   title: string
@@ -25,14 +26,17 @@ export class Task extends BaseEntity {
   status: TaskStatus
 
   @CreateDateColumn()
-  readonly createdAt?: Date;
+  readonly createdAt?: Date
 
   @UpdateDateColumn()
-  readonly updatedAt?: Date;
+  readonly updatedAt?: Date
 
   @DeleteDateColumn()
-  deletedAt?: Date;
+  deletedAt?: Date
 
   @ManyToOne(type => User, user => user.tasks, { eager: false })
   user: User
+
+  @Column({ default: null })
+  userId: number
 }

@@ -12,7 +12,7 @@ export const config: TypeOrmModuleOptions = {
   cli: {
     migrationsDir: 'src/db/migrations'
   },
-  synchronize: false,
+  synchronize: true,
   logging: true
 }
 

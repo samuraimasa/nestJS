@@ -4,13 +4,13 @@ import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import config from './config/config';
+import env from './config/env';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [config],
+      load: [env],
       isGlobal: true
     }),
     TypeOrmModule.forRootAsync({

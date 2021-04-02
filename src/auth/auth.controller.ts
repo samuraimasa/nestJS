@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
 import { AuthCredentialsDto } from "./dto/auth-credentials.dto";
 import { AuthService } from "./auth.service";
 import { AuthGuard } from "@nestjs/passport";
@@ -16,6 +16,7 @@ export class AuthController {
   }
 
   @Post('/signin')
+  @HttpCode(200)
   signIn(@Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto) {
     return this.authService.signIn(authCredentialsDto)
   }
