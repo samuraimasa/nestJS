@@ -11,7 +11,7 @@ export default () => ({
     cli: {
       migrationsDir: 'src/db/migrations'
     },
-    synchronize: true,
+    synchronize: false,
     logging: true
   },
 })

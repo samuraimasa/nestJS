@@ -17,7 +17,7 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   readonly id: number
 
-  @Column({ default: null })
+  @Column({ default: null, unique: true })
   encryptedId: string
 
   @Column()

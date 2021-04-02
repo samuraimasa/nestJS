@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm"
 import { Task } from "./task.entity"
+import { User } from "../auth/user.entity";
 
 @Entity()
 export class Todo extends BaseEntity {

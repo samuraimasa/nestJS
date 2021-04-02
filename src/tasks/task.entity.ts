@@ -52,6 +52,9 @@ export class Task extends BaseEntity {
   @OneToMany(() => Todo, todo => todo.task)
   todos: Todo[]
 
+  @Column()
+  hogehoe: string
+
   @BeforeInsert()
   async generateEncryptedId() {
     while (true) {
