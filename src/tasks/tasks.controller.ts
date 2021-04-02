@@ -18,11 +18,11 @@ import { CreateTaskDto } from "./dto/create-task.dto";
 import { UpdateTaskDto } from "./dto/update-task.dto";
 import { GetTasksFilterDto } from "./dto/get-tasks-filter.dto";
 import { TaskStatusValidationPipe } from "./pipes/task-status-validation.pipe";
-import { Task } from "./task.entity";
-import { TaskStatus } from "./task-status.enum";
+import { Task, TaskStatus } from "./task.entity";
 import { AuthGuard } from "@nestjs/passport";
 import { User } from "../auth/user.entity";
 import { GetUser } from "../auth/get-user.decorator";
+import { TaskModel } from "./task.model";
 
 @Controller('tasks')
 @UseGuards(AuthGuard())
@@ -39,14 +39,21 @@ export class TasksController {
   ) {
     this.logger.verbose(`User "${ user.username }" | ${ JSON.stringify(filterDto) }`)
     return this.taskService.getTasks(filterDto, user)
+      .then(tasks => tasks.map((task) => {
+        const taskModel = new TaskModel(task)
+        return taskModel.convertITask()
+      }))
   }
 
   @Get('/:id')
   getTaskById(
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: User
-  ): Promise<Task> {
-    return this.taskService.getTaskById(id, user)
+  ) {
+    return this.taskService.getTaskById(id, user).then((task) => {
+      const taskModel = new TaskModel(task)
+      return taskModel.convertITask()
+    })
   }
 
   @Post()
@@ -54,10 +61,12 @@ export class TasksController {
   createTask(
     @Body() createTaskDto: CreateTaskDto,
     @GetUser() user: User
-  ):
-    Promise<Task> {
+  ) {
     this.logger.verbose(`User "${ user.username }" | ${ JSON.stringify(createTaskDto) }`)
-    return this.taskService.createTask(createTaskDto, user)
+    return this.taskService.createTask(createTaskDto, user).then((task) => {
+      const taskModel = new TaskModel(task)
+      return taskModel.convertITask()
+    })
   }
 
 //

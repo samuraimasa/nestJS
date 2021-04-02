@@ -1,5 +1,4 @@
 export default () => ({
-  port: 3000,
   database: {
     type: 'postgres',
     host: process.env.DATABASE_HOST,
