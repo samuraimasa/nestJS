@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { TasksService } from './tasks/tasks.service';
+import { TodosService } from './tasks/todos.service';
 
 async function bootstrap() {
   const logger = new Logger('bootstrap');
@@ -14,9 +14,9 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get('server').port || 9999;
   logger.debug(port);
-  const taskService = app.get(TasksService);
-  await taskService.batchTest();
-  console.log('batch');
+  const todoService = app.get(TodosService);
+  await todoService.batchTest();
+  console.log('OK!');
   await app.close();
 }
 

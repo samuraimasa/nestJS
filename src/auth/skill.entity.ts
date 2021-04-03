@@ -5,40 +5,27 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  Generated,
-  IsNull,
-  ManyToOne,
-  Not,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../auth/user.entity';
 import { HashId } from '../utils/hash_id';
-import { Todo } from './todo.entity';
-
-export enum TaskStatus {
-  OPEN = 'OPEN',
-  IN_PROGRESS = 'IN_PROGRESS',
-  DONE = 'DONE',
-}
+import { User } from './user.entity';
+import { UserSkill } from './user-skill.entity';
 
 @Entity()
-export class Task extends BaseEntity {
+@Unique(['name'])
+export class Skill extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   readonly id: number;
 
-  @Column()
+  @Column({ default: null, unique: true })
   encryptedId: string;
 
   @Column()
-  title: string;
-
-  @Column()
-  description: string;
-
-  @Column()
-  status: TaskStatus;
+  name: string;
 
   @CreateDateColumn()
   readonly createdAt?: Date;
@@ -47,26 +34,23 @@ export class Task extends BaseEntity {
   readonly updatedAt?: Date;
 
   @DeleteDateColumn()
-  deletedAt?: Date;
+  readonly deletedAt?: Date;
 
-  @ManyToOne(() => User, (user) => user.tasks)
-  user: User;
+  @OneToMany(() => UserSkill, (userSkill) => userSkill.skill)
+  userSkill: UserSkill[];
 
-  @Column({ default: null })
-  userId: number;
-
-  @OneToMany(() => Todo, (todo) => todo.task)
-  todos: Todo[];
+  @ManyToMany(() => User, (user) => user.skills)
+  users: User[];
 
   @BeforeInsert()
   async generateEncryptedId() {
     while (true) {
       const encryptedId = HashId.gen();
-      const task = await Task.findOne({
+      const skill = await Skill.findOne({
         where: { encryptedId },
         withDeleted: true,
       });
-      if (!task) {
+      if (!skill) {
         this.encryptedId = encryptedId;
         return;
       }
