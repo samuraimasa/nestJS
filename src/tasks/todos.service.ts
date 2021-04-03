@@ -27,56 +27,51 @@ export class TodosService {
   async batchTest() {
     this.logger.debug(`------- start ------->> ${uuid()}`);
 
-    // const us = await this.userSkillRepository.findOne({
-    //   userId: 1,
-    //   skillId: 1,
-    // });
-    // us.hogehoge = 'テストほげ1';
-    // await us.save();
-    // console.log(us);
+    let _skill1 = new Skill();
+    _skill1.name = 'TypeORM';
+    await _skill1.save();
+    let _skill2 = new Skill();
+    _skill2.name = 'TypeORM2';
+    await _skill2.save();
+    const skills = [_skill1, _skill2];
 
-    //
-    // let _skill1 = new Skill();
-    // _skill1.name = 'TypeORM';
-    // await _skill1.save();
-    // let _skill2 = new Skill();
-    // _skill2.name = 'TypeORM2';
-    // await _skill2.save();
-    // const skills = [_skill1, _skill2];
-    //
-    // const user = await this.userRepository.signUp(<AuthCredentialsDto>{
-    //   username: 'User123',
-    //   password: 'SAdiout1873',
-    // });
-    // user.skills = skills;
-    // await user.save();
-    //
-    // let tt = new Task();
-    // tt.title = 'title';
-    // tt.description = 'desc';
-    // tt.status = TaskStatus.DONE;
-    // await tt.save();
-    // user.tasks = [tt];
-    // await user.save();
-    //
-    // let td = new Todo();
-    // td.title = 'title';
-    // td.description = 'desc';
-    // td.task = tt;
-    // await td.save();
-    // let td2 = new Todo();
-    // td2.title = 'title';
-    // td2.description = 'desc';
-    // td2.task = tt;
-    // await td2.save();
+    const user0 = await this.userRepository.signUp(<AuthCredentialsDto>{
+      username: 'User123',
+      password: 'SAdiout1873',
+    });
+    user0.skills = skills;
+    await user0.save();
 
-    // const us = await this.userSkillRepository.findOne({
-    //   userId: user.id,
-    //   skillId: skillId,
-    // });
-    // us.hogehoge = 'テストほげ1';
-    // await us.save();
-    // console.log(us);
+    let tt = new Task();
+    tt.title = 'title';
+    tt.description = 'desc';
+    tt.status = TaskStatus.DONE;
+    await tt.save();
+    user0.tasks = [tt];
+    await user0.save();
+
+    let td = new Todo();
+    td.title = 'title';
+    td.description = 'desc';
+    td.task = tt;
+    td.user = user0;
+    td.type = 1111;
+    await td.save();
+    let td2 = new Todo();
+    td2.title = 'title';
+    td2.description = 'desc';
+    td2.task = tt;
+    td2.user = user0;
+    td2.type = 2222;
+    await td2.save();
+
+    const us = await this.userSkillRepository.findOne({
+      userId: 1,
+      skillId: 1,
+    });
+    us.hogehoge = 'テストほげ1';
+    await us.save();
+    console.log(us);
 
     //
     const task = await this.taskRepository.findOne(1);
