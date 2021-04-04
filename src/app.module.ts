@@ -7,6 +7,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import env from './env';
 import config from './config/confg';
 import { AuthModule } from './auth/auth.module';
+import { BullModule } from '@nestjs/bull';
+import { AppProcessor } from './app.processor';
 
 @Module({
   imports: [
@@ -21,10 +23,17 @@ import { AuthModule } from './auth/auth.module';
         ...configService.get('database'),
       }),
     }),
+    BullModule.registerQueue({
+      name: 'test',
+      redis: {
+        host: 'redis',
+        port: 6379,
+      },
+    }),
     TasksModule,
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppProcessor],
 })
 export class AppModule {}

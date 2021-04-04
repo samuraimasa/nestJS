@@ -15,6 +15,15 @@ services:
       - postgres-data:/var/lib/postgresql/data:cached
     restart: always
 
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    networks:
+      - nestjs
+    volumes:
+      - .:/data
+
   server:
     build:
       context: .
@@ -27,6 +36,7 @@ services:
       - 3000:3000
     depends_on:
       - postgres
+      - redis
     restart: always
 
 networks:
