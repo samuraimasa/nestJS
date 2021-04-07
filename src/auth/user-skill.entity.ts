@@ -11,7 +11,7 @@ import { IsNotEmpty } from 'class-validator';
 import { User } from './user.entity';
 import { Skill } from './skill.entity';
 
-@Entity('user_skills')
+@Entity({ name: 'user_skills', synchronize: false })
 export class UserSkill extends BaseEntity {
   @ManyToOne(() => User, (user) => user.userSkill)
   user: User;

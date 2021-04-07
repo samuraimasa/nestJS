@@ -20,9 +20,9 @@ import { Task } from '../tasks/task.entity';
 import { HashId } from '../utils/hash_id';
 import { Skill } from './skill.entity';
 import { UserSkill } from './user-skill.entity';
-import { IsNotEmpty } from 'class-validator';
+import { IsEmpty, IsNotEmpty } from 'class-validator';
 
-@Entity()
+@Entity({ synchronize: false })
 @Unique(['username'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
@@ -69,6 +69,9 @@ export class User extends BaseEntity {
   })
   skills: Skill[];
 
+  @Column({ type: 'jsonb', default: null })
+  data: object;
+
   @BeforeInsert()
   async generateEncryptedId() {
     while (true) {
@@ -79,6 +82,7 @@ export class User extends BaseEntity {
       });
       if (!user) {
         this.encryptedId = encryptedId;
+        this.data = { a: 1, b: 'hoge佐野' };
         return;
       }
     }
